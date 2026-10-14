@@ -1,0 +1,66 @@
+:root {
+  --bg: #dfe9f3;
+  --bg-outer: #2b3a55;
+  --panel: #ffffff;
+  --panel-2: #f3f6fa;
+  --ink: #1f2a3a;
+  --ink-2: #5b6b80;
+  --line: #d4dde8;
+  --accent: #3b6ea5;
+  --accent-2: #2c5584;
+  --good: #3fae5a;
+  --warn: #e8a531;
+  --bad: #e0503f;
+  --gold: #e3b53c;
+  --perf: linear-gradient(90deg, #5aa9e6, #3b6ea5);
+  --stress: linear-gradient(90deg, #f6c453, #e0503f);
+  --radius: 14px;
+  --shadow: 0 4px 14px rgba(20, 35, 60, 0.15);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --font: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg-outer);
+  background-image: radial-gradient(rgba(255,255,255,0.06) 2px, transparent 2px);
+  background-size: 28px 28px;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+#app {
+  position: relative;
+  max-width: 480px;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+  padding-top: var(--safe-top);
+}
+
+/* PC: 가운데 폰 프레임 */
+@media (min-width: 700px) and (min-height: 700px) {
+  body { display: flex; align-items: center; justify-content: center; }
+  #app {
+    height: min(920px, 96vh);
+    width: 440px;
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), 0 0 0 10px #1a2436;
+  }
+}
+
+.hidden { display: none !important; }

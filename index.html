@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>개복치 신입사원</title>
+  <meta name="description" content="세상에서 가장 예민한 개복치 신입사원을 회장까지 키워라!">
+  <meta name="theme-color" content="#3b6ea5">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="개복치 신입사원">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/ui.css">
+</head>
+<body>
+  <div id="app">
+    <header id="hud">
+      <div class="hud-row">
+        <div id="rank-badge" class="rank-badge">인턴</div>
+        <div class="hud-life" id="hud-life">1대 복치</div>
+        <div class="hud-money" title="퇴직금"><span>💰</span><b id="hud-money">0</b></div>
+      </div>
+      <div class="bar-wrap" title="다음 직급까지">
+        <span class="bar-label">실적</span>
+        <div class="bar"><div class="bar-fill perf" id="perf-fill"></div><span class="bar-text" id="perf-text">0 / 150</span></div>
+      </div>
+      <div class="bar-wrap" title="100이 되면 번아웃 퇴사">
+        <span class="bar-label">스트레스</span>
+        <div class="bar"><div class="bar-fill stress" id="stress-fill"></div><span class="bar-text" id="stress-text">0</span></div>
+      </div>
+      <div class="hud-row small">
+        <div id="coffee-row" class="coffee-row" title="프로젝트에 쓰는 커피"></div>
+        <div id="life-time" class="life-time">근속 0초</div>
+      </div>
+    </header>
+
+    <main id="office">
+      <div class="wall">
+        <button class="window" id="obj-window" aria-label="창문"><span class="sun">☀️</span><span class="cloud">☁️</span></button>
+        <button class="clock" id="obj-clock" aria-label="시계"><span class="hand h"></span><span class="hand m"></span></button>
+        <div class="poster">이달의<br>사원<br><span>🐟</span></div>
+      </div>
+      <div class="floor"></div>
+      <div class="desk">
+        <div class="monitor"><span>📈</span></div>
+        <button class="plant" id="obj-plant" aria-label="선인장">🌵</button>
+        <div class="mug">☕</div>
+      </div>
+      <button id="bokchi" class="bokchi" aria-label="복치"></button>
+      <div id="speech" class="speech hidden"></div>
+      <div id="tasks"></div>
+      <div id="fx"></div>
+      <div id="fever-banner" class="fever-banner hidden">💰 월급날 피버! 💰</div>
+      <div id="alert-box" class="alert-box hidden">
+        <div class="alert-title"><span id="alert-icon"></span> <b id="alert-title"></b></div>
+        <div class="alert-help" id="alert-help"></div>
+        <div class="alert-bar"><div id="alert-fill"></div></div>
+      </div>
+      <div id="walker" class="walker hidden"></div>
+    </main>
+
+    <nav id="actions">
+      <button class="act" data-act="project"><span class="ic">📋</span><span>프로젝트</span></button>
+      <button class="act" data-act="rest"><span class="ic">🛋️</span><span id="rest-label">휴식</span><i class="cd" id="rest-cd"></i></button>
+      <button class="act" data-act="upgrade"><span class="ic">📚</span><span>자기계발</span><i class="dot hidden" id="upgrade-dot"></i></button>
+      <button class="act" data-act="dex"><span class="ic">📖</span><span>도감</span></button>
+      <button class="act" data-act="menu"><span class="ic">⚙️</span><span>메뉴</span></button>
+    </nav>
+
+    <div id="toast-root"></div>
+    <div id="modal-root"></div>
+  </div>
+
+  <!-- 로드 순서: 코어 → 데이터 → 시스템 → UI → 메인 -->
+  <script src="js/core/ns.js"></script>
+  <script src="js/core/util.js"></script>
+  <script src="js/core/storage.js"></script>
+  <script src="js/core/audio.js"></script>
+  <script src="js/data/ranks.js"></script>
+  <script src="js/data/tasks.js"></script>
+  <script src="js/data/upgrades.js"></script>
+  <script src="js/data/projects.js"></script>
+  <script src="js/data/deaths.js"></script>
+  <script src="js/data/events.js"></script>
+  <script src="js/data/endings.js"></script>
+  <script src="js/systems/economy.js"></script>
+  <script src="js/systems/state.js"></script>
+  <script src="js/systems/rules.js"></script>
+  <script src="js/ui/character.js"></script>
+  <script src="js/ui/hud.js"></script>
+  <script src="js/ui/office.js"></script>
+  <script src="js/ui/modals.js"></script>
+  <script src="js/ui/minigames.js"></script>
+  <script src="js/ui/sharecard.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+/* ── HUD ─────────────────────────────── */
+#hud {
+  padding: 10px 14px 8px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 5;
+}
+.hud-row { display: flex; align-items: center; gap: 8px; }
+.hud-row.small { font-size: 12px; color: var(--ink-2); justify-content: space-between; }
+.rank-badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  background: #9aa5b1;
+  transition: background 0.3s;
+}
+.hud-life { font-size: 13px; color: var(--ink-2); flex: 1; }
+.hud-money {
+  display: flex; align-items: center; gap: 4px;
+  background: #fff7e0; border: 1px solid #f0dca0;
+  padding: 2px 10px; border-radius: 999px; font-size: 14px;
+}
+.hud-money b { font-variant-numeric: tabular-nums; }
+.hud-money.bump { animation: bump 0.4s; }
+
+.bar-wrap { display: flex; align-items: center; gap: 8px; }
+.bar-label { width: 52px; font-size: 12px; font-weight: 700; color: var(--ink-2); }
+.bar {
+  position: relative; flex: 1; height: 16px;
+  background: var(--panel-2); border-radius: 999px; overflow: hidden;
+  border: 1px solid var(--line);
+}
+.bar-fill { height: 100%; width: 0; border-radius: 999px; transition: width 0.15s linear; }
+.bar-fill.perf { background: var(--perf); }
+.bar-fill.stress { background: var(--stress); }
+.bar-text {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--ink); text-shadow: 0 0 3px #fff;
+  font-variant-numeric: tabular-nums;
+}
+.bar.danger { animation: pulse-red 0.6s infinite alternate; }
+.coffee-row { display: flex; align-items: center; gap: 2px; font-size: 15px; }
+.coffee-row .empty { opacity: 0.25; filter: grayscale(1); }
+.coffee-row small { margin-left: 4px; color: var(--ink-2); font-size: 11px; }
+
+/* ── 사무실 ──────────────────────────── */
+#office {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background: #eaf1f8;
+}
+#office.fever { box-shadow: inset 0 0 0 5px var(--gold), inset 0 0 40px rgba(227, 181, 60, 0.6); }
+.wall { position: absolute; inset: 0 0 38% 0; background: linear-gradient(#f4f8fc, #e3ecf5); }
+.floor {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 38%;
+  background: repeating-linear-gradient(90deg, #c9b79c 0 46px, #c1ad90 46px 48px);
+}
+.window {
+  position: absolute; left: 7%; top: 10%; width: 34%; height: 42%;
+  background: linear-gradient(#9fd3f7, #d6efff);
+  border: 6px solid #fff; border-radius: 6px;
+  box-shadow: 0 0 0 2px #c8d5e3;
+  overflow: hidden;
+}
+.window::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 5px; background: #fff; transform: translateX(-50%); }
+.window .sun { position: absolute; right: 12%; top: 10%; font-size: 26px; }
+.window .cloud { position: absolute; left: -30%; top: 45%; font-size: 26px; animation: cloud 14s linear infinite; }
+.clock {
+  position: absolute; right: 10%; top: 10%; width: 52px; height: 52px;
+  border-radius: 50%; background: #fff; border: 4px solid #3d4b61;
+}
+.clock .hand { position: absolute; left: 50%; bottom: 50%; width: 3px; background: #3d4b61; transform-origin: 50% 100%; border-radius: 2px; }
+.clock .h { height: 13px; transform: translateX(-50%) rotate(300deg); }
+.clock .m { height: 19px; transform: translateX(-50%) rotate(0deg); animation: tick 60s steps(60) infinite; }
+.poster {
+  position: absolute; right: 9%; top: 34%; width: 62px; padding: 5px 4px;
+  background: #fff8dc; border: 2px solid #e2cf8f; font-size: 10px; font-weight: 800;
+  text-align: center; line-height: 1.2; transform: rotate(3deg); color: #8a6d1d;
+}
+.poster span { font-size: 22px; }
+.desk {
+  position: absolute; left: 50%; bottom: 13%; width: 78%; height: 16%;
+  transform: translateX(-50%);
+  background: linear-gradient(#a5764d, #8a5e3a);
+  border-radius: 8px 8px 4px 4px;
+  box-shadow: 0 6px 0 #6d4a2d;
+  z-index: 2;
+}
+.monitor {
+  position: absolute; left: 6%; bottom: 100%; width: 74px; height: 52px;
+  background: #2c3445; border: 4px solid #4a556b; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+}
+.monitor::after { content: ''; position: absolute; left: 50%; bottom: -12px; width: 12px; height: 9px; background: #4a556b; transform: translateX(-50%); }
+.plant { position: absolute; right: 6%; bottom: 96%; font-size: 30px; line-height: 1; }
+.mug { position: absolute; right: 26%; bottom: 96%; font-size: 20px; }
+
+/* ── 복치 ────────────────────────────── */
+.bokchi {
+  position: absolute; left: 50%; bottom: 22%;
+  width: 46%; max-width: 210px; aspect-ratio: 200 / 220;
+  transform: translateX(-50%);
+  z-index: 3;
+  animation: bob 3s ease-in-out infinite;
+  filter: drop-shadow(0 6px 6px rgba(0,0,0,0.15));
+}
+.bokchi svg { width: 100%; height: 100%; display: block; }
+.bokchi.shake { animation: shake 0.35s; }
+.bokchi.panic { animation: bob 0.5s ease-in-out infinite; }
+.bokchi.squish { animation: squish 0.25s; }
+
+.speech {
+  position: absolute; left: 50%; bottom: 66%;
+  transform: translateX(-50%);
+  max-width: 78%;
+  padding: 8px 12px; border-radius: 14px;
+  background: #fff; box-shadow: var(--shadow);
+  font-size: 13px; font-weight: 600; text-align: center;
+  z-index: 6; animation: pop 0.2s;
+  pointer-events: none;
+}
+.speech::after {
+  content: ''; position: absolute; left: 50%; top: 100%;
+  border: 8px solid transparent; border-top-color: #fff; transform: translateX(-50%);
+}
+
+/* ── 업무 아이콘 ─────────────────────── */
+#tasks { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.task {
+  position: absolute;
+  width: 58px; height: 58px; margin: -29px 0 0 -29px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow), inset 0 -3px 0 rgba(0,0,0,0.08);
+  font-size: 30px;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: auto;
+  animation: pop 0.22s ease-out, float 2.4s ease-in-out infinite 0.22s;
+  touch-action: manipulation;
+}
+.task.trap { background: #fff3f1; box-shadow: var(--shadow), 0 0 0 3px rgba(224, 80, 63, 0.35); }
+.task.expiring { animation: blink 0.3s infinite alternate; }
+.task.gone { animation: popout 0.18s forwards; pointer-events: none; }
+.task .lbl {
+  position: absolute; top: 100%; margin-top: 2px; left: 50%; transform: translateX(-50%);
+  white-space: nowrap; font-size: 10px; font-weight: 700; color: var(--ink-2);
+  background: rgba(255,255,255,0.85); padding: 0 4px; border-radius: 4px;
+}
+.envelope {
+  position: absolute; top: 18%; left: -70px; z-index: 7;
+  font-size: 44px; pointer-events: auto;
+  animation: fly 7s linear forwards;
+  filter: drop-shadow(0 0 10px gold);
+}
+
+/* ── 효과 ────────────────────────────── */
+#fx { position: absolute; inset: 0; pointer-events: none; z-index: 8; }
+.floater {
+  position: absolute; font-weight: 900; font-size: 18px;
+  color: var(--accent-2); text-shadow: 0 1px 0 #fff, 0 0 6px #fff;
+  animation: rise 0.9s ease-out forwards; white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+.floater.bad { color: var(--bad); }
+.floater.gold { color: #b8860b; font-size: 20px; }
+.fever-banner {
+  position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: #5a3d00; font-weight: 900;
+  padding: 6px 14px; border-radius: 999px; z-index: 9; box-shadow: var(--shadow);
+  animation: bump 0.6s infinite alternate;
+}
+
+/* ── 돌발 상황 ──────────────────────── */
+.alert-box {
+  position: absolute; left: 50%; top: 10px; transform: translateX(-50%);
+  width: min(88%, 340px); z-index: 10;
+  background: #1f2a3a; color: #fff; border-radius: 16px; padding: 10px 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35); text-align: center;
+  animation: alertin 0.25s ease-out;
+}
+.alert-box.silence { background: #3d3a5c; }
+.alert-box.ok { background: var(--good); }
+.alert-box.fail { background: var(--bad); }
+.alert-title { font-size: 17px; }
+.alert-help { font-size: 13px; opacity: 0.85; margin: 2px 0 8px; }
+.alert-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.2); overflow: hidden; }
+.alert-bar > div { height: 100%; background: var(--gold); width: 100%; }
+#office.silence::after {
+  content: ''; position: absolute; inset: 0; z-index: 7; pointer-events: none;
+  background: rgba(30, 25, 60, 0.35);
+}
+.walker {
+  position: absolute; bottom: 4%; left: -60px; z-index: 6;
+  font-size: 52px; pointer-events: none;
+  animation: walk 3.2s linear forwards;
+  transform: scaleX(-1);
+}
+@keyframes walk { 0% { left: -60px; } 100% { left: calc(100% + 10px); } }
+@keyframes alertin { from { transform: translate(-50%, -20px); opacity: 0; } }
+
+/* ── 애니메이션 ──────────────────────── */
+@keyframes bob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, -8px); } }
+@keyframes shake { 0%, 100% { transform: translate(-50%, 0); } 25% { transform: translate(-54%, 0) rotate(-4deg); } 75% { transform: translate(-46%, 0) rotate(4deg); } }
+@keyframes squish { 50% { transform: translate(-50%, 4px) scale(1.06, 0.92); } }
+@keyframes pop { from { transform: scale(0.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes popout { to { transform: scale(1.5); opacity: 0; } }
+@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+@keyframes blink { to { opacity: 0.35; } }
+@keyframes rise { from { opacity: 1; margin-top: 0; } to { opacity: 0; margin-top: -60px; } }
+@keyframes fly { to { left: calc(100% + 70px); } }
+@keyframes cloud { to { left: 110%; } }
+@keyframes tick { to { transform: translateX(-50%) rotate(360deg); } }
+@keyframes bump { 50% { transform: scale(1.08); } }
+@keyframes pulse-red { to { box-shadow: 0 0 0 3px rgba(224, 80, 63, 0.45); } }
+.fever-banner { animation-name: feverpulse; }
+@keyframes feverpulse { from { transform: translateX(-50%) scale(1); } to { transform: translateX(-50%) scale(1.08); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bokchi, .task, .window .cloud { animation: none !important; }
+}
