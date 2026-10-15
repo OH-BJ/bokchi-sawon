@@ -107,6 +107,8 @@
       ];
       // 도감 10개마다 마일스톤 보너스
       if (isNew && dexAfter % 10 === 0) lines.push([`📖 도감 ${dexAfter}개 달성`, E.dexMilestone(dexAfter)]);
+      const sub = lines.reduce((a, [, v]) => a + v, 0);
+      lines.push(['💼 연봉 협상', Math.floor(sub * 0.1 * lv(s, 'salary'))]);
       const items = lines.filter(([, v]) => v > 0);
       return { items, total: items.reduce((a, [, v]) => a + v, 0) };
     },

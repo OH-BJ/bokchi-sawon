@@ -8,6 +8,7 @@
     { id: 'multi',   icon: '🐙', name: '멀티태스킹',      desc: '동시에 뜨는 업무 +1, 등장 속도 ↑',   base: 30,   growth: 2.1,  max: 5 },
     { id: 'plan',    icon: '🗂️', name: '기획력',          desc: '프로젝트 성공률 +3%p',               base: 40,   growth: 1.7,  max: 10 },
     { id: 'coffee',  icon: '☕', name: '커피 머신',       desc: '커피 최대치 +1, 충전 -4초',          base: 45,   growth: 2.0,  max: 5 },
+    { id: 'salary',  icon: '💼', name: '연봉 협상',       desc: '퇴직금 +10%',                        base: 250,  growth: 2.3,  max: 5 },
     { id: 'payday',  icon: '📅', name: '월급날 앞당기기', desc: '월급 봉투가 더 자주 나온다 (-10%)',   base: 70,   growth: 2.0,  max: 5 },
     { id: 'bonus',   icon: '💸', name: '보너스 협상',     desc: '월급날 피버 시간 +2초',              base: 60,   growth: 1.9,  max: 6 },
     { id: 'social',  icon: '🍻', name: '처세술',          desc: '이벤트 위험 -15%, 보상 +15%',        base: 60,   growth: 1.8,  max: 8 },
