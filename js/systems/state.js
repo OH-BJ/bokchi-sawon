@@ -17,9 +17,10 @@
     return s;
   }
 
-  function newLife(s) {
+  // n을 주면 그 번호로 생애를 다시 만든다 (아직 시작 안 한 생애를 최신 업그레이드로 갱신할 때)
+  function newLife(s, n) {
     const startRank = Math.min(s.up.para || 0, G.MAX_RANK - 1);
-    const n = s.life ? s.life.n + 1 : 1;
+    n = n || (s.life ? s.life.n + 1 : 1);
     s.life = {
       n,
       rank: startRank,

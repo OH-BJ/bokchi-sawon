@@ -64,8 +64,10 @@
     lifeOver = true;
     G.modal.close(true);
     const rep = R.die(state, id);
-    game.save();
     G.ui.forcedMood = 'dead'; G.hud.refreshMood(); G.hud.render(state);
+    // 퇴사 확정과 동시에 새 생애를 저장한다. 퇴사 화면에서 나갔다 들어와도 죽기 전으로 돌아가지 않게.
+    G.state.newLife(state);
+    game.save();
     const el = document.getElementById('bokchi');
     el.classList.add('shake');
     G.office.say('...퇴사하겠습니다', 1500);
@@ -79,18 +81,20 @@
     lifeOver = true;
     G.modal.close(true);
     const res = R.reachEnding(state, id);
+    // 회장 엔딩은 명예퇴직까지 즉시 정산. 엔딩 화면에서 나갔다 들어와도 이어할 수 없게 새 생애를 함께 저장.
+    const rep = id === 'chairman' ? R.die(state, 'retire') : null;
+    G.hud.render(state);
+    G.state.newLife(state);
     game.save();
     setTimeout(() => S.ending(state, res, () => {
-      if (id === 'chairman') {
-        const rep = R.die(state, 'retire');
-        game.save();
-        S.death(state, rep, () => startLife());
-      } else startLife();
+      if (rep) S.death(state, rep, () => startLife());
+      else startLife();
     }), 600);
   }
 
   function startLife(fresh) {
-    if (!fresh) G.state.newLife(state);
+    // 새 생애는 퇴사 시점에 이미 만들어져 있다. 그 뒤 산 업그레이드(낙하산 등)가 반영되도록 같은 번호로 다시 만든다.
+    if (!fresh) G.state.newLife(state, state.life.n);
     lifeOver = false;
     G.ui.forcedMood = null;
     G.office.clear();
@@ -115,7 +119,8 @@
       if (!game.paused()) G.office.update(state, dt);
     }
     hudT -= dt;
-    if (hudT <= 0) { hudT = 0.1; G.hud.render(state); }
+    // 퇴사/엔딩 화면 동안에는 HUD를 마지막 생애 상태로 멈춰 둔다 (뒤에는 이미 새 생애가 들어 있음)
+    if (hudT <= 0 && !lifeOver) { hudT = 0.1; G.hud.render(state); }
     saveT += dt;
     if (saveT > 5) { saveT = 0; game.save(); }
     requestAnimationFrame(frame);
@@ -185,6 +190,11 @@
     G.hud.init();
     G.office.init();
     bindActions();
+    // 아직 한 번도 진행 안 한 생애(퇴사 화면에서 나갔다 들어온 경우 등)는 최신 업그레이드로 다시 맞춘다
+    if (state.life.time < 1) {
+      G.state.newLife(state, state.life.n);
+      if (state.life.n > 1) S.toast(`🏢 ${state.life.n}대 복치, ${G.RANKS[state.life.rank].name}(으)로 입사!`);
+    }
     offlineCatchUp();
     G.hud.render(state);
     if (!state.meta.tutorial) {
