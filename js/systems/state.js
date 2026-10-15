@@ -36,6 +36,7 @@
       nextHazard: G.econ.randomHazardEvery,
       nextAlert: G.econ.alertInterval(),
       alert: null,
+      bonus: { alert: 0, fever: 0 },   // 퇴사 시 정산되는 적립금
       recentEvents: [],
       specialDone: {},
       pets: [],
@@ -54,6 +55,7 @@
     s.life.pets = [];
     if (s.life.nextAlert == null) s.life.nextAlert = G.econ.alertInterval();
     s.life.alert = null;
+    s.life.bonus = s.life.bonus || { alert: 0, fever: 0 };
     s.v = SAVE_VERSION;
     return s;
   }

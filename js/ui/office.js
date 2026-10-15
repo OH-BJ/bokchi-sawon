@@ -173,6 +173,7 @@
       R.startFever(G.game.state);
       G.audio.fever();
       say('월급이다!!!', 1500);
+      floaterCenter(`퇴직금 +${E.feverBonus(G.game.state)} 적립`, 'gold');
     });
     el.addEventListener('animationend', () => el.remove());
     office.appendChild(el);
@@ -211,7 +212,7 @@
     $('walker').classList.add('hidden');
     box.classList.add(ok ? 'ok' : 'fail');
     $('alert-help').textContent = ok
-      ? (kind === 'silence' ? '무사히 넘겼다. 스트레스 -15' : '열일 인정! 실적 보너스')
+      ? (kind === 'silence' ? '무사히 넘겼다. 스트레스 -15 · 퇴직금 적립' : '열일 인정! 실적 보너스 · 퇴직금 적립')
       : (kind === 'silence' ? '탁! ...다들 쳐다본다' : '딴짓하다 걸렸다...');
     $('alert-fill').style.width = '0';
     if (ok) G.audio.coin(); else G.audio.bad();

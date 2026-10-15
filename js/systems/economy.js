@@ -86,11 +86,25 @@
     // 같은 사유로 퇴사한 횟수만큼 위험 감소
     resist(s, deathId) { return Math.pow(0.5, s.dex[deathId] || 0); },
 
-    deathMoney(s, isNew) {
-      const base = 1.2 + 1.0 * Math.pow(1 + s.life.rank, 1.5);
-      const discovery = isNew ? 4 * (1 + s.life.rank) : 0;
-      return Math.floor(base + discovery);
+    // 퇴직금 정산서. 항목별로 돌려준다 (퇴사 화면에 그대로 표시)
+    deathPay(s, isNew, dexAfter) {
+      const L = s.life;
+      const r = L.rank;
+      const lines = [
+        ['기본 퇴직금', Math.floor(1.2 + 1.0 * Math.pow(1 + r, 1.5))],
+        ['근속 수당', Math.floor(1.5 * Math.sqrt(L.time / 10) * (1 + 0.5 * r))],
+        ['신규 퇴사 사유 발견', isNew ? 4 * (1 + r) : 0],
+        ['돌발 상황 대처', Math.floor(L.bonus.alert)],
+        ['월급 봉투', Math.floor(L.bonus.fever)],
+      ];
+      // 도감 10개마다 마일스톤 보너스
+      if (isNew && dexAfter % 10 === 0) lines.push([`📖 도감 ${dexAfter}개 달성`, E.dexMilestone(dexAfter)]);
+      const items = lines.filter(([, v]) => v > 0);
+      return { items, total: items.reduce((a, [, v]) => a + v, 0) };
     },
+    dexMilestone(n) { return 2 * n; },
+    alertBonus(s) { return 1 + s.life.rank; },
+    feverBonus(s) { return 1 + s.life.rank; },
 
     upgradeCost(id, level) {
       const u = G.UPGRADE_BY_ID[id];

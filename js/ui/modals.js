@@ -269,7 +269,11 @@
           <div>최종 직급<b>${rankName}</b></div>
           <div>실적<b>${U.fmt(rep.perf)}</b></div>
         </div>
-        <div class="reward-line">💰 퇴직금 +${U.fmt(rep.money)}</div>
+        <div class="pay-slip">
+          <div class="pay-title">퇴직금 정산서</div>
+          ${rep.pay.map(([k, v], i) => `<div class="pay-row" style="animation-delay:${0.15 + i * 0.12}s"><span>${k}</span><b>+${U.fmt(v)}</b></div>`).join('')}
+          <div class="pay-row total" style="animation-delay:${0.15 + rep.pay.length * 0.12}s"><span>💰 합계</span><b>+${U.fmt(rep.money)}</b></div>
+        </div>
       </div>`;
     const m = open({
       title: '', closable: false, body,

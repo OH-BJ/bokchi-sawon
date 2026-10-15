@@ -1,5 +1,5 @@
 // 오프라인 캐시. 파일을 수정해 배포할 때는 VERSION을 올리면 새로 받는다.
-const VERSION = 'bokchi-v3';
+const VERSION = 'bokchi-v4';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './css/base.css', './css/game.css', './css/ui.css',
@@ -26,10 +26,12 @@ self.addEventListener('activate', (e) => {
 });
 
 // 네트워크 우선, 실패하면 캐시 (업데이트가 바로 반영되도록)
+// 브라우저 HTTP 캐시도 건너뛰고 서버에 최신 여부를 확인한다
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || !e.request.url.startsWith(self.location.origin)) return;
+  const req = e.request.mode === 'navigate' ? e.request : new Request(e.request.url, { cache: 'no-cache' });
   e.respondWith(
-    fetch(e.request)
+    fetch(req)
       .then((res) => {
         const copy = res.clone();
         caches.open(VERSION).then((c) => c.put(e.request, copy));

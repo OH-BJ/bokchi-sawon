@@ -178,6 +178,7 @@
     if (A.count < def.need) return [];
     const out = [R.endAlert(s, true)];
     R.addPerf(s, E.bestTaskValue(s) * 8, out);
+    s.life.bonus.alert += E.alertBonus(s);
     return out;
   };
   R.alertTimeout = function (s) {
@@ -186,6 +187,7 @@
     if (A.kind === 'silence') {
       const out = [R.endAlert(s, true)];
       s.life.stress = Math.max(0, s.life.stress - 15);
+      s.life.bonus.alert += E.alertBonus(s);
       return out;
     }
     const out = [R.endAlert(s, false)];
@@ -196,6 +198,7 @@
 
   R.startFever = function (s) {
     s.life.fever = E.feverDuration(s);
+    s.life.bonus.fever += E.feverBonus(s);
   };
 
   // ── 휴식 ────────────────────────────────────────────
@@ -335,11 +338,13 @@
   R.die = function (s, deathId) {
     const L = s.life;
     const isNew = !s.dex[deathId];
-    const money = E.deathMoney(s, isNew);
     s.dex[deathId] = (s.dex[deathId] || 0) + 1;
+    const dexAfter = G.DEATHS.filter((d) => s.dex[d.id]).length;
+    const pay = E.deathPay(s, isNew, dexAfter);
+    const money = pay.total;
     s.money += money;
     s.stats.deaths++;
-    return { id: deathId, isNew, money, rank: L.rank, time: L.time, perf: L.perf, life: L.n };
+    return { id: deathId, isNew, money, pay: pay.items, rank: L.rank, time: L.time, perf: L.perf, life: L.n };
   };
 
   R.reachEnding = function (s, id) {
