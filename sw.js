@@ -1,5 +1,5 @@
 // 오프라인 캐시. 파일을 수정해 배포할 때는 VERSION을 올리면 새로 받는다.
-const VERSION = 'bokchi-v4';
+const VERSION = 'bokchi-v5';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './css/base.css', './css/game.css', './css/ui.css',

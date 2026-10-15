@@ -47,7 +47,14 @@
   function migrate(s) {
     if (!s || typeof s !== 'object' || !s.life) return null;
     // 새로 추가된 업그레이드/필드 보정
-    for (const u of G.UPGRADES) if (s.up[u.id] == null) s.up[u.id] = 0;
+    for (const u of G.UPGRADES) {
+      if (s.up[u.id] == null) s.up[u.id] = 0;
+      // 최대 레벨이 줄어든 업그레이드는 넘친 만큼 환불
+      while (s.up[u.id] > u.max) {
+        s.up[u.id]--;
+        s.money += G.econ.upgradeCost(u.id, s.up[u.id]);
+      }
+    }
     const fresh = { stats: { deaths: 0, playTime: 0, bestRank: 0, vlog: 0, promotions: 0 } };
     s.stats = Object.assign({}, fresh.stats, s.stats);
     s.life.specialDone = s.life.specialDone || {};

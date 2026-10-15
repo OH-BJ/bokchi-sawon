@@ -10,7 +10,7 @@
     { name: '부장', need: 1500000,   bonus: 200,   color: '#d9534f', title: '창가 자리를 얻었다' },
     { name: '이사', need: 25000000,  bonus: 450,   color: '#8e44ad', title: '개인 사무실이 생겼다' },
     { name: '사장', need: 1200000000, bonus: 1000,  color: '#2c3e50', title: '전용 엘리베이터가 생겼다' },
-    { name: '회장', need: 30000000000, bonus: 2500,  color: '#c9a227', title: '회사가 곧 나다' },
+    { name: '회장', need: 12000000000, bonus: 2500,  color: '#c9a227', title: '회사가 곧 나다' },
   ];
   G.MAX_RANK = G.RANKS.length - 1;
 })(globalThis.G);

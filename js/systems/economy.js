@@ -25,6 +25,12 @@
       const top = tasks.length - 1;
       return tasks.map((t, i) => ({ t, w: i === top ? 5 : i === top - 1 ? 3 : i === top - 2 ? 1.5 : 0.4 }));
     },
+    // 화면에 뜨는 업무의 평균 가치 (등장 가중치 반영)
+    avgTaskValue(s) {
+      const ws = E.taskWeights(E.availableTasks(s));
+      const tot = ws.reduce((a, x) => a + x.w, 0);
+      return ws.reduce((a, x) => a + x.w * E.taskValue(s, x.t), 0) / tot;
+    },
     bestTaskValue(s) {
       const tasks = E.availableTasks(s);
       return E.taskValue(s, tasks[tasks.length - 1]);
@@ -44,7 +50,9 @@
     },
     stressDecay: 0.35,
 
-    autoRate(s) { return lv(s, 'auto') * 0.3 * E.bestTaskValue(s) / (s.life.fever > 0 ? 2 : 1); },
+    // 자동 업무 = 평균 업무를 초당 (레벨 × 0.06)개 대신 처리. 직접 터치(초당 약 1.2개)보다 약하게.
+    autoTasksPerSec(s) { return lv(s, 'auto') * 0.06; },
+    autoRate(s) { return E.autoTasksPerSec(s) * E.avgTaskValue(s) / (s.life.fever > 0 ? 2 : 1); },
 
     coffeeMax(s) { return 3 + lv(s, 'coffee'); },
     coffeeRegen(s) { return 45 - 4 * lv(s, 'coffee'); },

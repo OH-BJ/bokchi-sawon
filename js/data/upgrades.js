@@ -2,7 +2,7 @@
   // cost = base * growth^level. 효과 수치는 economy.js에서 사용.
   G.UPGRADES = [
     { id: 'skill',   icon: '⌨️', name: '업무 숙련',       desc: '업무 실적 +30%',                     base: 12,   growth: 1.65, max: 30 },
-    { id: 'auto',    icon: '🤖', name: '자동 업무',       desc: '가만히 있어도 실적이 오른다',        base: 40,   growth: 1.85, max: 20 },
+    { id: 'auto',    icon: '🤖', name: '자동 업무',       desc: '업무를 조금씩 대신 처리해 준다',     base: 40,   growth: 1.85, max: 15 },
     { id: 'mental',  icon: '🧘', name: '멘탈 강화',       desc: '스트레스 증가 -10%',                 base: 20,   growth: 1.65, max: 12 },
     { id: 'rest',    icon: '🛋️', name: '탕비실 리모델링', desc: '휴식 대기시간 -3초, 회복량 +5',      base: 25,   growth: 1.8,  max: 6 },
     { id: 'multi',   icon: '🐙', name: '멀티태스킹',      desc: '동시에 뜨는 업무 +1, 등장 속도 ↑',   base: 30,   growth: 2.1,  max: 5 },

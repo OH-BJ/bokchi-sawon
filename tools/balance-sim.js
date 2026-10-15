@@ -20,11 +20,7 @@ const MINI_BONUS = 0.1;     // 미니게임 평균 보너스
 const OVERHEAD = 1.15;      // 모달/퇴사 화면/고민 시간 보정
 const LIMIT = 6 * 3600;
 
-function avgTaskValue(s) {
-  const ws = E.taskWeights(E.availableTasks(s));
-  const tot = ws.reduce((a, x) => a + x.w, 0);
-  return ws.reduce((a, x) => a + x.w * E.taskValue(s, x.t), 0) / tot;
-}
+const avgTaskValue = (s) => E.avgTaskValue(s);
 
 function knownRisky(s, choice) {
   return choice.o.some((o) => o.death && s.dex[o.death]);
