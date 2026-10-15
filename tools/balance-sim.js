@@ -16,7 +16,7 @@ G.clock = () => new Date(2026, 9, 14, 12, 0); // 수요일 정오 (특수 이벤
 const RUNS = Number(process.argv[2] || 30);
 const DT = 0.1;
 const TAP_RATE = 1.6;       // 초당 터치 수
-const MINI_BONUS = 0.1;     // 미니게임 평균 보너스
+const MINI_BONUS = 0.08;    // 미니게임 평균 보너스 (연타 난이도 상향 반영)
 const OVERHEAD = 1.15;      // 모달/퇴사 화면/고민 시간 보정
 const LIMIT = 6 * 3600;
 

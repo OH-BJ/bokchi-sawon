@@ -75,12 +75,13 @@
 
   function mash(s, p, done) {
     const [help, icon] = MASH_TEXT[p.id] || ['연타!', '👆'];
-    const target = 26 + p.rank * 3;
+    // 직급이 높을수록 목표가 크게 오른다 (인턴 45회 ~ 사장 87회)
+    const target = 45 + p.rank * 6;
     const TIME = 5;
     const body = document.createElement('div');
     body.innerHTML = `
       <div class="mg-title">${p.name}</div>
-      <div class="mg-help">${help} ${TIME}초 안에 ${target}번! (터치 / 스페이스)</div>
+      <div class="mg-help">${help} ${TIME}초 안에 ${target}번!<br>손가락 하나로 (터치 / 스페이스)</div>
       <button class="mash-btn">${icon}</button>
       <div class="mash-meter"><div></div></div>
       <div class="mg-result">준비...</div>`;
@@ -108,18 +109,34 @@
       ended = true;
       clearInterval(timer);
       document.removeEventListener('keydown', onKey);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
       const r = count / target;
       let bonus, label;
       if (r >= 1) { bonus = 0.25; label = `🌟 ${count}회! 성공률 +25%`; G.audio.coin(); }
-      else if (r >= 0.7) { bonus = 0.12; label = `👍 ${count}회! 성공률 +12%`; }
+      else if (r >= 0.65) { bonus = 0.12; label = `👍 ${count}회! 성공률 +12%`; }
       else if (r >= 0.4) { bonus = 0.04; label = `🙂 ${count}회. 성공률 +4%`; }
       else { bonus = -0.05; label = `😴 ${count}회... 성공률 -5%`; G.audio.bad(); }
       result.textContent = label;
       setTimeout(() => done(bonus, label), 800);
     };
-    const onKey = (e) => { if ((e.code === 'Space' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); hit(); } };
+    // 꼼수 방지: 키보드는 스페이스만(꾹 누르기 제외), 터치는 다른 손가락이 눌린 동안 들어온 입력 무시
+    const onKey = (e) => { if (e.code === 'Space' && !e.repeat) { e.preventDefault(); hit(); } };
+    // 눌려 있는 손가락: pointerId → 누른 시각. 손 뗀 신호가 누락돼도 막히지 않게 0.6초 지난 기록은 무시
+    const down = new Map();
+    const onUp = (e) => down.delete(e.pointerId);
     document.addEventListener('keydown', onKey);
-    btn.addEventListener('pointerdown', (e) => { e.preventDefault(); hit(); });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    btn.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      const now = performance.now();
+      for (const [id, t] of down) if (now - t > 600) down.delete(id);
+      down.delete(e.pointerId);
+      const multi = down.size > 0;
+      down.set(e.pointerId, now);
+      if (!multi) hit();
+    });
     result.textContent = '버튼을 누르면 시작!';
   }
 
