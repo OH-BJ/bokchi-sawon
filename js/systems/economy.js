@@ -73,8 +73,8 @@
     alertInterval() { return U.rand(45, 80); },
     alertDeathP: 0.6,
 
-    feverInterval() { return U.rand(80, 140); },
-    feverDuration: 12,
+    feverInterval(s) { return U.rand(80, 140) * Math.pow(0.9, lv(s, 'payday')); },
+    feverDuration(s) { return 12 + 2 * lv(s, 'bonus'); },
 
     // 20초마다 굴리는 '돌연 퇴사' 확률
     randomHazard: 0.025,

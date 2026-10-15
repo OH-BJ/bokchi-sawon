@@ -3,7 +3,7 @@
   const U = G.U, E = G.econ, R = G.rules;
   const $ = (id) => document.getElementById(id);
 
-  let office, layer, fx, speechEl, banner;
+  let office, layer, fx, speechEl, banner, feverTime, feverFill;
   let items = [];
   let spawnT = 0;
   let speechTimer = null;
@@ -16,6 +16,7 @@
   function init() {
     office = $('office'); layer = $('tasks'); fx = $('fx');
     speechEl = $('speech'); banner = $('fever-banner');
+    feverTime = $('fever-time'); feverFill = $('fever-fill');
 
     $('bokchi').addEventListener('pointerdown', (e) => {
       e.preventDefault();
@@ -120,6 +121,11 @@
     updateAlert(s);
     office.classList.toggle('fever', s.life.fever > 0);
     banner.classList.toggle('hidden', !(s.life.fever > 0));
+    if (s.life.fever > 0) {
+      feverTime.textContent = s.life.fever.toFixed(1);
+      feverFill.style.width = (s.life.fever / E.feverDuration(s)) * 100 + '%';
+      banner.classList.toggle('ending', s.life.fever <= 3);
+    }
     if (!s.life.alert && U.chance(dt / 25) && speechEl.classList.contains('hidden')) say(U.pick(IDLE_LINES), 1800);
   }
 

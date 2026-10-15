@@ -32,7 +32,7 @@
       restCd: 0,
       idleT: 0,
       nextEvent: n === 1 ? 25 : G.econ.eventInterval(),
-      nextFever: G.econ.feverInterval(),
+      nextFever: G.econ.feverInterval(s),
       nextHazard: G.econ.randomHazardEvery,
       nextAlert: G.econ.alertInterval(),
       alert: null,

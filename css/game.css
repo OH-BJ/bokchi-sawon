@@ -171,6 +171,7 @@
 .floater.gold { color: #b8860b; font-size: 20px; }
 .fever-banner {
   position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  overflow: hidden; white-space: nowrap;
   background: var(--gold); color: #5a3d00; font-weight: 900;
   padding: 6px 14px; border-radius: 999px; z-index: 9; box-shadow: var(--shadow);
   animation: bump 0.6s infinite alternate;
@@ -219,6 +220,9 @@
 @keyframes bump { 50% { transform: scale(1.08); } }
 @keyframes pulse-red { to { box-shadow: 0 0 0 3px rgba(224, 80, 63, 0.45); } }
 .fever-banner { animation-name: feverpulse; }
+.fever-banner b { display: inline-block; min-width: 2.6em; text-align: right; font-variant-numeric: tabular-nums; font-size: 18px; }
+.fever-banner i { position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: rgba(90, 61, 0, 0.45); }
+.fever-banner.ending { background: #f2cf68; animation-duration: 0.18s; }
 @keyframes feverpulse { from { transform: translateX(-50%) scale(1); } to { transform: translateX(-50%) scale(1.08); } }
 
 @media (prefers-reduced-motion: reduce) {

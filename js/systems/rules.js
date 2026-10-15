@@ -77,7 +77,7 @@
     // 월급날 피버 봉투
     L.nextFever -= dt;
     if (L.nextFever <= 0) {
-      L.nextFever = E.feverInterval();
+      L.nextFever = E.feverInterval(s);
       out.push({ type: 'feverSpawn' });
     }
 
@@ -195,7 +195,7 @@
   };
 
   R.startFever = function (s) {
-    s.life.fever = E.feverDuration;
+    s.life.fever = E.feverDuration(s);
   };
 
   // ── 휴식 ────────────────────────────────────────────
